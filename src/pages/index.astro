@@ -1,6 +1,7 @@
 ---
 import { SwiperSlide} from "astro-swiper";
 import { Image } from 'astro:assets';
+import { withBase } from '@/utils/withBase';
 
 import Layout from '../layouts/Layout.astro';
 import SwiperComponent from '../components/SwiperComponent.astro';
@@ -278,7 +279,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
         </div>
         <div class="home-page-voice__info">
           <video controls>
-            <source src="/video/smart-home-voice.mp4" type="video/mp4">
+            <source src={withBase("/video/smart-home-voice.mp4")} type="video/mp4">
             Your browser does not support the video tag.
           </video>
         </div>
