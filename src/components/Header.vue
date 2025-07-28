@@ -7,16 +7,16 @@
       <nav class="nav" :class="{'active': isOpen}" role="menu">
         <ul class="nav__list">
           <li class="nav__item" @click="closeMenu">
-            <a href="/#features" aria-label="Перейти к разделу 'Возможности'" class="link">Возможности</a>
+            <a :href="featuresUrl" aria-label="Перейти к разделу 'Возможности'" class="link">Возможности</a>
           </li>
           <li class="nav__item" @click="closeMenu">
-            <a href="/#cases" aria-label="Перейти к разделу 'Кейсы'">Кейсы</a>
+            <a :href="casesUrl" aria-label="Перейти к разделу 'Кейсы'">Кейсы</a>
           </li>
           <li class="nav__item" @click="closeMenu">
-            <a href="/#steps" aria-label="Перейти к разделу 'Этапы Работы'">Этапы Работы</a>
+            <a :href="stepsUrl" aria-label="Перейти к разделу 'Этапы Работы'">Этапы Работы</a>
           </li>
           <li class="nav__item">
-            <a href="/about-us/" aria-label="Узнать больше о нас">О нас</a>
+            <a :href="aboutUsUrl" aria-label="Узнать больше о нас">О нас</a>
           </li>
           <li class="nav__item nav__item--remote">
             <a href="https://shop.multi-agent.io/" aria-label="Посетить наш магазин умных устройств" target="_blank">Магазин умных устройств</a>
@@ -60,6 +60,8 @@
 
 <script lang="ts" setup>
 import logo from 'src/assets/img/logo.svg';
+import { withBase } from '../utils/withBase';
+
 import { ref } from 'vue';
 
 const isOpen = ref<boolean>(false);
@@ -71,6 +73,11 @@ const toggleMenu = (): void => {
 const closeMenu = (): void => {
   isOpen.value = false;
 };
+
+const aboutUsUrl = withBase('/about-us/');
+const featuresUrl = withBase('/#features');
+const casesUrl = withBase('/#cases');
+const stepsUrl = withBase('/#steps');
 
 </script>
 
