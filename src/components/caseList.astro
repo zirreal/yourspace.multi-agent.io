@@ -1,0 +1,23 @@
+---
+// Props typing
+interface Props {
+  items: string[];
+  initialVisible?: number;
+}
+
+const { items } = Astro.props as Props;
+---
+
+<ul class="case-list" data-truncated>
+  {items.map((item, index) => (
+    <li>{item}</li>
+  ))}
+</ul>
+
+<style>
+  .case-list {
+    margin-bottom: var(--space);
+    padding-left: var(--space-half);
+    font-variation-settings: var(--font-flex-normal);
+  }
+</style>

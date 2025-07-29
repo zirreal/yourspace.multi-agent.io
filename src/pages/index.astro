@@ -3,8 +3,11 @@ import { SwiperSlide} from "astro-swiper";
 import { Image } from 'astro:assets';
 import { withBase } from '@/utils/withBase';
 
+import { casesFeatures } from '../data/caseData';
+
 import Layout from '../layouts/Layout.astro';
 import SwiperComponent from '../components/SwiperComponent.astro';
+import CaseList from '../components/caseList.astro';
 import CatOnVacuum from '../components/CatOnVacuum.astro';
 
 // images
@@ -49,7 +52,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
         <p>Устройства любых экосистем в одном приложении и сценарии, разработанные для Вас</p>
         <div class="home-page-main__hass-block">
           <Image src={HASS} alt="home assistant logo" />
-          <p><span>Работает на,</span> Home Assistant</p>
+          <p><span>Работает на</span> Home Assistant</p>
         </div>
       </div>
     </div>
@@ -72,7 +75,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
           <Image src={FEAT2} alt="" aria-hidden="true" />
           <div>
             <h3>Работает с умной колонкой</h3>
-            <p>Среди них точно есть то, что подойдет именно Вам</p>
+            <p>Но отлично справляется и без нее</p>
           </div>
         </div>
         <div class="home-page-more__grid-item">
@@ -108,7 +111,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
       </div>
 
       <div class="home-page__link">
-        <a href="/about-us/" class="link-with-arrow underline" aria-label="Узнать больше о нашей компании">О нас</a>
+        <a href={withBase('/about-us/')} class="link-with-arrow underline" aria-label="Узнать больше о нашей компании">О нас</a>
       </div>
     </div>
    </section>
@@ -116,7 +119,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   <!-- Smart Home features -->
   <section id="features" class="home-page-features">
     <div class="layout">
-      <SwiperComponent>
+      <SwiperComponent buttons>
         <SwiperSlide>
           <div class="home-page-features__slide">
             <h2>Возможности умного дома</h2>
@@ -245,7 +248,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   <section id="cases" class="home-page-cases">
     <div class="layout">
       <h2>Наши кейсы</h2>
-      <SwiperComponent>
+      <SwiperComponent long>
         <SwiperSlide>
           <div class="home-page-cases__slide-image">
             <Image src={CASE1} alt="case example"/>
@@ -253,15 +256,39 @@ import WORKDECOR from '../assets/img/work-decor.webp';
           <div class="home-page-cases__info">
             <h3 class="title-blue">Квартира-офис Фрунзе</h3>
             <h4>Результат:</h4>
-            <ul>
-              <li>Напоминание о незакрытых окнах на выходе через умную колонку</li>
-              <li>Интеграция старого кондиционера и управление радиаторами отопления (6 штук)</li>
-              <li>Управление всеми группами света (17), добавление умных светильников, пылесоса, увлажнителя</li>
-              <li>Автоматический свет в санузлах Счётчик э/э</li>
-            </ul>
+            <CaseList items={casesFeatures.frunze} initialVisible={4} />
 
             <h4>Стоимость проекта:</h4>
             <span class="title-blue">₽ 171,800</span>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div class="home-page-cases__slide-image">
+            <Image src={CASE1} alt="case example"/>
+          </div>
+          <div class="home-page-cases__info">
+            <h3 class="title-blue">Квартира Бестужевская</h3>
+            <h4>Результат:</h4>
+
+            <CaseList items={casesFeatures.bestuzhevskaya} initialVisible={4} />
+
+            <h4>Стоимость проекта:</h4>
+            <span class="title-blue">₽ 71,390</span>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div class="home-page-cases__slide-image">
+            <Image src={CASE1} alt="case example"/>
+          </div>
+          <div class="home-page-cases__info">
+            <h3 class="title-blue">Квартира Алены</h3>
+            <h4>Результат:</h4>
+              <CaseList items={casesFeatures.alena} initialVisible={4} />
+
+            <h4>Стоимость проекта:</h4>
+            <span class="title-blue">₽ 407,411</span>
           </div>
         </SwiperSlide>
       </SwiperComponent>
@@ -570,12 +597,6 @@ import WORKDECOR from '../assets/img/work-decor.webp';
 
   .home-page-cases h4 {
     margin-bottom: calc(var(--space-half) * 0.5);
-  }
-
-  .home-page-cases ul {
-    margin-bottom: var(--space);
-    padding-left: var(--space-half);
-    font-variation-settings: var(--font-flex-normal);
   }
 
   .home-page-cases .home-page__link {
