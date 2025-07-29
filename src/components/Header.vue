@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="layout">  
-      <a href="/" aria-label="YourSpace главная страница">
+      <a :href="mainUrl" aria-label="YourSpace главная страница">
         <img :src="logo.src" alt="YourSpace logo" />
       </a>
       <nav class="nav" :class="{'active': isOpen}" role="menu">
@@ -78,6 +78,7 @@ const aboutUsUrl = withBase('/about-us/');
 const featuresUrl = withBase('/#features');
 const casesUrl = withBase('/#cases');
 const stepsUrl = withBase('/#steps');
+const mainUrl = withBase('/')
 
 </script>
 

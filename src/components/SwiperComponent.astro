@@ -1,47 +1,118 @@
 ---
-import { Swiper, SwiperWrapper, SwiperPagination} from "astro-swiper";
+import { Swiper, SwiperWrapper, SwiperPagination, SwiperButtonPrev, SwiperButtonNext} from "astro-swiper";
+
+const {buttons=false, long=false} = Astro.props;
 ---
-<Swiper
-  options={{ 
-    speed: 400,
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    grid: {
-      rows: 1,
-    },
-    spaceBetween: 32,
-    fadeEffect: {
-      crossFade: true,
-    },
+<div class={buttons ? 'swiper-wrapper-container' : ''}>
 
-    pagination: {
-      el: ".swiper-pagination",
-    },
+  <Swiper
+    options={{ 
+      speed: 400,
+      autoHeight: long ? true : false,
+      slidesPerView: 1,
+      slidesPerGroup: 1,
+      grid: {
+        rows: 1,
+      },
+      spaceBetween: 32,
+      fadeEffect: {
+        crossFade: true,
+      },
 
-    keyboard: {
-      enabled: true,
-      onlyInViewport: true,
-      pageUpDown: true,
-    },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
 
-    a11y: {
-      prevSlideMessage: 'Previous',
-      nextSlideMessage: 'Next',
-    }
-  }}>
-  <SwiperWrapper>
-    <slot/>
-  </SwiperWrapper>
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true,
+        pageUpDown: true,
+      },
 
-  <SwiperPagination />
-</Swiper>
+      a11y: {
+        prevSlideMessage: 'Previous',
+        nextSlideMessage: 'Next',
+      },
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    }}>
+    <SwiperWrapper>
+      <slot/>
+    </SwiperWrapper>
+
+    <SwiperPagination />
+  </Swiper>
+  {buttons &&   
+    <SwiperButtonPrev />
+    <SwiperButtonNext /> }
+</div>
+
 
 <style>
+  .swiper-wrapper-container {
+    position: relative;
+    padding-left: 3rem; 
+    padding-right: 3rem; 
+  }
+
   .swiper {
-    max-width: 1600px;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
   }
 
   img {
     width: 100%;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 100%; 
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    background-color: #f3f3f3;
+  }
+
+  .swiper-button-prev {
+    left: -15px; 
+  }
+
+  .swiper-button-next {
+    right: -15px; 
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 16px;
+    color: black;
+  }
+
+  @media screen and (max-width: 650px) {
+    .swiper-wrapper-container {
+      padding: 0;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none;
+    }
   }
 </style>
