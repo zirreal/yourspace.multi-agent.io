@@ -7,8 +7,6 @@
   </div>
 </div>
 
-<noscript><div><img src="https://mc.yandex.ru/watch/103487153" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
 <script>
   const cookieBanner = document.querySelector<HTMLElement>('#cookie-consent-banner');
   const cookieButton = document.querySelector<HTMLButtonElement>('.cookie-btn');
@@ -18,50 +16,72 @@
 
   let yandexInitialized = false;
 
+  declare global {
+    interface Window {
+      ym?: (...args: any[]) => void;
+    }
+  }
+
+  const addNoscriptPixel = (): void => {
+    const img = document.createElement('img');
+    img.src = 'https://mc.yandex.ru/watch/103487153';
+    img.style.position = 'absolute';
+    img.style.left = '-9999px';
+    img.alt = '';
+
+    const div = document.createElement('div');
+    div.appendChild(img);
+    document.body.appendChild(div);
+  };
+
   const yandexMetrika = (): void => {
     if (!hasConsented() || yandexInitialized) return;
-    console.log('here')
     yandexInitialized = true;
 
-    (function(m,e,t,r,i,k,a){
-      m[i] = m[i] || function() {
-        (m[i].a = m[i].a || []).push(arguments);
+    addNoscriptPixel();
+
+    (function (m: any, e: Document, t: string, r: string, i: string) {
+      m[i] = m[i] || function (...args: any[]) {
+        (m[i].a = m[i].a || []).push(args);
       };
       m[i].l = Date.now();
 
-      for (let j = 0; j < document.scripts.length; j++) {
-        if (document.scripts[j].src === r) return;
-      }
+      if ([...e.scripts].some(script => script.src === r)) return;
 
-      k = e.createElement(t);
-      a = e.getElementsByTagName(t)[0];
-      k.async = 1;
+      const k = e.createElement(t);
+      const a = e.getElementsByTagName(t)[0];
+      k.async = true;
       k.src = r;
-      a?.parentNode?.insertBefore(k, a); 
-    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=103487153', 'ym');
+      a?.parentNode?.insertBefore(k, a);
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
-
-    ym(103487153, 'init', {
-      ssr: true,
-      webvisor: true,
+    window.ym?.(103487153, 'init', {
       clickmap: true,
-      ecommerce: "dataLayer",
+      trackLinks: true,
       accurateTrackBounce: true,
-      trackLinks: true
+      webvisor: true,
+      ecommerce: 'dataLayer',
     });
   };
 
+  // Show the banner if user hasn't agreed yet
   if (cookieBanner) {
     cookieBanner.classList.toggle('active', !hasConsented());
   }
 
+  // Handle "continue" click
   cookieButton?.addEventListener('click', () => {
     cookieBanner?.classList.remove('active');
     localStorage.setItem(COOKIE_AGREED_KEY, 'true');
     yandexMetrika();
   });
 
-  document.addEventListener('DOMContentLoaded', yandexMetrika);
+  // Run on load if already agreed
+  document.addEventListener('DOMContentLoaded', () => {
+    if (hasConsented()) {
+      yandexMetrika();
+    }
+  });
 </script>
 
 <style>
