@@ -61,7 +61,6 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   <!-- More about Smart Home -->
   <section class="home-page-more">
     <div class="layout">
-      <!-- <h2 class="title-blue">Не зависит от бренда, Не требует перепланировки</h2> -->
       <Image class="home-page-more__message-img" src={MESSAGEDECOR} alt="Не зависит от бренда, Не требует перепланировки" />
       <div class="home-page-more__grid">
         <div class="home-page-more__grid-item">
@@ -82,7 +81,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
           <Image src={FEAT3} alt="" aria-hidden="true" />
           <div>
             <h3>Современное решение без облаков и проводов</h3>
-            <p>Не нужно заводить учетную запись и прокладывать слаботочк</p>
+            <p>Не нужно заводить учетную запись и прокладывать слаботочку</p>
           </div>
         </div>
         <div class="home-page-more__grid-item">
@@ -136,7 +135,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div class="home-page-features__slide-image">
+          <div class="home-page-features__slide-image home-page-features__slide-image--smaller">
             <Image src={SHFEATURES2} alt="smart home example"/>
           </div>
           <div class="home-page-features__slide">
@@ -248,13 +247,30 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   <section id="cases" class="home-page-cases">
     <div class="layout">
       <h2>Наши кейсы</h2>
-      <SwiperComponent long>
+      <SwiperComponent buttons>
         <SwiperSlide>
           <div class="home-page-cases__slide-image">
             <Image src={CASE1} alt="case example"/>
           </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div class="home-page-cases__slide-image">
+            <Image src={CASE1} alt="case example"/>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div class="home-page-cases__slide-image">
+            <Image src={CASE1} alt="case example"/>
+          </div>
+        </SwiperSlide>
+      </SwiperComponent>
+
+      <SwiperComponent slides={2} cls="slides-grid" loop={false} useGrid long>
+        <SwiperSlide>
           <div class="home-page-cases__info">
-            <h3 class="title-blue">Квартира-офис Фрунзе</h3>
+            <h3 class="title-blue">Квартира-офис на улице Фрунзе</h3>
             <h4>Результат:</h4>
             <CaseList items={casesFeatures.frunze} initialVisible={4} />
 
@@ -264,11 +280,8 @@ import WORKDECOR from '../assets/img/work-decor.webp';
         </SwiperSlide>
 
         <SwiperSlide>
-          <div class="home-page-cases__slide-image">
-            <Image src={CASE1} alt="case example"/>
-          </div>
           <div class="home-page-cases__info">
-            <h3 class="title-blue">Квартира Бестужевская</h3>
+            <h3 class="title-blue">Квартира на Бестужевской улице</h3>
             <h4>Результат:</h4>
 
             <CaseList items={casesFeatures.bestuzhevskaya} initialVisible={4} />
@@ -279,11 +292,8 @@ import WORKDECOR from '../assets/img/work-decor.webp';
         </SwiperSlide>
 
         <SwiperSlide>
-          <div class="home-page-cases__slide-image">
-            <Image src={CASE1} alt="case example"/>
-          </div>
           <div class="home-page-cases__info">
-            <h3 class="title-blue">Квартира Алены</h3>
+            <h3 class="title-blue">Квартира на Университетской набережной</h3>
             <h4>Результат:</h4>
               <CaseList items={casesFeatures.alena} initialVisible={4} />
 
@@ -292,6 +302,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
           </div>
         </SwiperSlide>
       </SwiperComponent>
+
     </div>
   </section>
 
@@ -321,7 +332,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
         <Image src={WORKDECOR} alt="" aria-hidden="true" />
       </div>
       <div class="home-page__link">
-        <a href="https://t.me/YourSpaceSpb" class="link-with-arrow underline" target="_blank" aria-label="Запланировать замер для вашего умного дома">Запланировать замер</a>
+        <a href="https://t.me/MultiAgent_io" class="title-blue" target="_blank" aria-label="Запланировать замер для вашего умного дома">Запишитесь на замер и получите интерактивную карту дома в подарок!</a>
       </div>
     </div>
   </div>
@@ -330,6 +341,12 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   <CatOnVacuum/>
 
 </Layout>
+
+<style is:global>
+  .home-page-cases .swiper {
+    margin-bottom: var(--space);
+  }
+</style>
 
 
 <style>
@@ -391,7 +408,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
     content: "";
     position: absolute;
     top: 0;
-    right: 0;
+    right: calc(var(--space) * 4);
     width: 50%;
     height: 100%;
     background-image: url('../assets/img/hass-decor-image.webp');
@@ -500,6 +517,10 @@ import WORKDECOR from '../assets/img/work-decor.webp';
     font-variation-settings: var(--font-flex-normal);
   }
 
+  .home-page-features__slide-image--smaller {
+    max-width: 50%;
+   }
+
   /* steps block */
 
   .home-page-work-steps {
@@ -585,22 +606,12 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   }
 
   /* cases block */
-
   .home-page-cases .swiper-slide {
-    align-items: flex-start;
-    gap: calc(var(--space) * 2);
-  }
-
-  .home-page-cases__slide-image {
-    max-width: 814px;
+    align-items: center;
   }
 
   .home-page-cases h4 {
     margin-bottom: calc(var(--space-half) * 0.5);
-  }
-
-  .home-page-cases .home-page__link {
-    max-width: unset;
   }
 
   .home-page-cases .home-page__link span {
@@ -644,7 +655,30 @@ import WORKDECOR from '../assets/img/work-decor.webp';
     max-width: 110px;
   }
 
+  .plan .home-page__link a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: text-decoration 0.3s ease-in;
+  }
+
+  .plan .home-page__link a:hover {
+    color: var(--text-accent);
+  }
+
+  .plan .home-page__link a:not(:is(:hover, :focus)) {
+    text-decoration-color: color-mix(in srgb, currentColor, transparent 75%);
+  }
+
   /* media queries */
+
+  @media screen and (max-width: 990px) {
+    .home-page-main::after  {
+      display: block;
+      position: static;
+      width: 100%;
+      height: 430px;
+    }
+  }
 
   @media screen and (max-width: 850px) {
     .home-page-more__grid, .home-page-work-steps__wrapper {
@@ -654,6 +688,11 @@ import WORKDECOR from '../assets/img/work-decor.webp';
     .swiper-slide  {
       flex-direction: column;
     }
+
+
+   .home-page-features__slide-image--smaller {
+    max-width: unset;
+   }
 
     .simple-grid {
       grid-template-columns: 1fr;
@@ -715,12 +754,6 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   }
 
   @media screen and (max-width: 790px) {
-    .home-page-main::after  {
-      display: block;
-      position: static;
-      width: 100%;
-      height: 330px;
-    }
 
     .plan__info {
       flex-direction: column;
@@ -730,6 +763,12 @@ import WORKDECOR from '../assets/img/work-decor.webp';
 
     .plan .home-page__link  {
       text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 390px) {
+    .home-page-main::after  {
+      height: 330px;
     }
   }
 </style>

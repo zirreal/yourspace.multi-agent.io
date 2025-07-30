@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="layout">  
-      <a :href="mainUrl" aria-label="YourSpace главная страница">
+      <a :href="mainUrl" class="header__logo" aria-label="YourSpace главная страница">
         <img :src="logo.src" alt="YourSpace logo" />
       </a>
       <nav class="nav" :class="{'active': isOpen}" role="menu">
@@ -16,10 +16,10 @@
             <a :href="stepsUrl" aria-label="Перейти к разделу 'Этапы Работы'">Этапы Работы</a>
           </li>
           <li class="nav__item">
-            <a :href="aboutUsUrl" aria-label="Узнать больше о нас">О нас</a>
+            <a :href="aboutUsUrl" aria-label="Узнать больше о нас">О&nbsp;нас</a>
           </li>
           <li class="nav__item nav__item--remote">
-            <a href="https://shop.multi-agent.io/" aria-label="Посетить наш магазин умных устройств" target="_blank">Магазин умных устройств</a>
+            <a href="https://t.me/MultiAgent_io" aria-label="Посетить наш магазин умных устройств" target="_blank">Получить интерактивную карту дома в подарок</a>
           </li>
         </ul>
       </nav>
@@ -91,11 +91,18 @@ const mainUrl = withBase('/')
     gap: calc(var(--space) * 0.5);
   }
 
+  .header__logo img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   .nav__list {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: calc(var(--space) * 2);
+    gap: var(--space);
     text-transform: lowercase;
   }
 
@@ -103,6 +110,7 @@ const mainUrl = withBase('/')
     position: relative;
     display: inline-block;
     padding: 0.4em 0;
+    font-size: calc(var(--base-font-size) * 0.8);
     z-index: 1;
   }
 
@@ -134,6 +142,7 @@ const mainUrl = withBase('/')
     border-radius: 30px;
     background-color: var(--color-blue-link);
     transition: background-color 0.33s ease;
+    text-align: center;
   }
 
   .nav__item--remote a {
@@ -180,7 +189,7 @@ const mainUrl = withBase('/')
   }
 
   .line3.open {
-    transform: translateY(-5px) rotate(-45deg);
+    transform: translateY(-4px) rotate(-45deg);
   }
 
   .header__btn:hover path {
@@ -200,15 +209,18 @@ const mainUrl = withBase('/')
       }
    }
 
-    @media screen and (max-width: 1040px) {
+    @media screen and (max-width: 1170px) {
       .nav__list {
-        font-size: calc(var(--base-font-size) * 0.7);
         gap: var(--space);
         text-align: center;
       }
+
+      .nav__item a {
+        font-size: calc(var(--base-font-size) * 0.7);
+      }
    }
 
-    @media screen and (max-width: 860px) {
+    @media screen and (max-width: 950px) {
       .nav {
         display: flex;
         position: absolute;
@@ -237,8 +249,11 @@ const mainUrl = withBase('/')
         align-items: center;
         justify-content: center;
         width: 100%;
-        font-size: var(--base-font-size);
         overflow: hidden;
+      }
+
+      .nav__item a {
+        font-size: var(--base-font-size) ;
       }
 
       .header__btn {
