@@ -174,7 +174,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
             <h3 class="title-blue">Безопасность</h3>
             <ul>
               <li>Кран перекроет воду или газ в случае утечки</li>
-              <li>Датчик CO2 предупредит необходимость проверить</li>
+              <li>Датчик CO2 предупредит необходимость проветрить</li>
               <li>Датчик контакта сообщит о несанкционированном доступе</li>
             </ul>
           </div>
@@ -268,41 +268,20 @@ import WORKDECOR from '../assets/img/work-decor.webp';
       </SwiperComponent>
 
       <SwiperComponent slides={2} cls="slides-grid" loop={false} useGrid long>
-        <SwiperSlide>
-          <div class="home-page-cases__info">
-            <h3 class="title-blue">Квартира-офис на улице Фрунзе</h3>
-            <h4>Результат:</h4>
-            <CaseList items={casesFeatures.frunze} initialVisible={4} />
+        {casesFeatures.map((caseData) => (
+          <SwiperSlide>
+            <div class="home-page-cases__info">
+              <h3 class="title-blue">{caseData.title}</h3>
 
-            <h4>Стоимость проекта:</h4>
-            <span class="title-blue">₽ 171,800</span>
-          </div>
-        </SwiperSlide>
+              <h4>Результат:</h4>
+              <CaseList items={caseData.items} initialVisible={4} />
 
-        <SwiperSlide>
-          <div class="home-page-cases__info">
-            <h3 class="title-blue">Квартира на Бестужевской улице</h3>
-            <h4>Результат:</h4>
-
-            <CaseList items={casesFeatures.bestuzhevskaya} initialVisible={4} />
-
-            <h4>Стоимость проекта:</h4>
-            <span class="title-blue">₽ 71,390</span>
-          </div>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <div class="home-page-cases__info">
-            <h3 class="title-blue">Квартира на Университетской набережной</h3>
-            <h4>Результат:</h4>
-              <CaseList items={casesFeatures.alena} initialVisible={4} />
-
-            <h4>Стоимость проекта:</h4>
-            <span class="title-blue">₽ 407,411</span>
-          </div>
-        </SwiperSlide>
+              <h4>Стоимость проекта:</h4>
+              <span class="title-blue">{caseData.price}</span>
+            </div>
+          </SwiperSlide>
+        ))}
       </SwiperComponent>
-
     </div>
   </section>
 
@@ -316,7 +295,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
           <Image src={VOICEASSISTANT} alt="voice helper" />
         </div>
         <div class="home-page-voice__info">
-          <video controls>
+          <video controls poster="/voice-video-cover.webp">
             <source src={withBase("/video/smart-home-voice.mp4")} type="video/mp4">
             Your browser does not support the video tag.
           </video>
@@ -397,18 +376,20 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   /* main block */
 
   .home-page-main {
-    position: relative;
-    min-height: 60vh;
     width: 100%;
     overflow: hidden;
     margin-bottom: var(--space-section);
   }
 
-  .home-page-main::after {
+  .home-page-main .layout {
+    position: relative;
+  }
+
+  .home-page-main .layout::after {
     content: "";
     position: absolute;
     top: 0;
-    right: calc(var(--space) * 4);
+    right: 0;
     width: 50%;
     height: 100%;
     background-image: url('../assets/img/hass-decor-image.webp');
@@ -456,7 +437,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
 
   .home-page-more__grid {
     display: grid;
-    align-items: center;
+    align-items: self-start;
     justify-content: center;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space);
@@ -519,7 +500,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
 
   .home-page-features__slide-image--smaller {
     max-width: 50%;
-   }
+  }
 
   /* steps block */
 
@@ -672,11 +653,11 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   /* media queries */
 
   @media screen and (max-width: 990px) {
-    .home-page-main::after  {
+    .home-page-main .layout::after  {
       display: block;
       position: static;
       width: 100%;
-      height: 430px;
+      height: 330px;
     }
   }
 
@@ -763,12 +744,6 @@ import WORKDECOR from '../assets/img/work-decor.webp';
 
     .plan .home-page__link  {
       text-align: center;
-    }
-  }
-
-  @media screen and (max-width: 390px) {
-    .home-page-main::after  {
-      height: 330px;
     }
   }
 </style>
