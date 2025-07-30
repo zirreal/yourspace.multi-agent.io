@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import { withBase } from '@/utils/withBase';
 
 import { casesFeatures } from '../data/caseData';
+import { caseImages } from "../data/caseImages";
 
 import Layout from '../layouts/Layout.astro';
 import SwiperComponent from '../components/SwiperComponent.astro';
@@ -32,7 +33,7 @@ import STEP2 from '../assets/img/step-2.webp';
 import STEP3 from '../assets/img/step-3.webp';
 import STEP4 from '../assets/img/step-4.webp';
 
-import CASE1 from '../assets/img/case-1.webp';
+import CASE1 from '../assets/img/cases/1.webp';
 
 import VOICEASSISTANT from '../assets/img/voice-assistant.webp';
 
@@ -247,24 +248,14 @@ import WORKDECOR from '../assets/img/work-decor.webp';
   <section id="cases" class="home-page-cases">
     <div class="layout">
       <h2>Наши кейсы</h2>
-      <SwiperComponent buttons>
-        <SwiperSlide>
-          <div class="home-page-cases__slide-image">
-            <Image src={CASE1} alt="case example"/>
-          </div>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <div class="home-page-cases__slide-image">
-            <Image src={CASE1} alt="case example"/>
-          </div>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <div class="home-page-cases__slide-image">
-            <Image src={CASE1} alt="case example"/>
-          </div>
-        </SwiperSlide>
+      <SwiperComponent slides={3} cls="image-swiper" buttons>
+        {caseImages.map((img) => (
+          <SwiperSlide>
+            <div class="image-slide">
+              <Image src={img.src} alt={img.alt} loading="lazy" />
+            </div>
+          </SwiperSlide>
+        ))}
       </SwiperComponent>
 
       <SwiperComponent slides={2} cls="slides-grid" loop={false} useGrid long>
