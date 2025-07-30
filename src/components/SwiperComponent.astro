@@ -1,56 +1,133 @@
 ---
-import { Swiper, SwiperWrapper, SwiperPagination, SwiperButtonPrev, SwiperButtonNext} from "astro-swiper";
+import { Swiper, SwiperWrapper, SwiperPagination, SwiperButtonPrev, SwiperButtonNext } from "astro-swiper";
 
-const {buttons=false, long=false} = Astro.props;
----
-<div class={buttons ? 'swiper-wrapper-container' : ''}>
+import type { SwiperOptions } from 'swiper/types';
 
-  <Swiper
-    options={{ 
-      speed: 400,
-      autoHeight: long ? true : false,
+interface Props {
+  buttons?: boolean;
+  long?: boolean;
+  slides?: number;
+  loop?: boolean;
+  cls?: string;
+  useGrid?: boolean;
+}
+
+const {
+  buttons = false,
+  long = false,
+  slides = 1,
+  loop = true,
+  cls = '',
+  useGrid = false,
+} = Astro.props as Props;
+
+const uid = `swiper-${Math.random().toString(36).substring(2, 9)}`;
+
+
+const baseOptions: SwiperOptions = {
+  speed: 400,
+  autoHeight: long,
+  slidesPerView: 1,
+  slidesPerGroup: 1,
+  grid: {
+    rows: 1,
+  },
+  spaceBetween: 32,
+  fadeEffect: {
+    crossFade: true,
+  },
+  pagination: {
+    el: `.${uid}-pagination`,
+    clickable: true,
+  },
+  keyboard: {
+    enabled: true,
+    onlyInViewport: true,
+    pageUpDown: true,
+  },
+  a11y: {
+    prevSlideMessage: 'Previous',
+    nextSlideMessage: 'Next',
+  },
+  loop,
+  navigation: {
+    nextEl: `.${uid}-next`,
+    prevEl: `.${uid}-prev`,
+  },
+ breakpoints: {
+    0: {
       slidesPerView: 1,
-      slidesPerGroup: 1,
       grid: {
         rows: 1,
       },
-      spaceBetween: 32,
-      fadeEffect: {
-        crossFade: true,
-      },
+      autoHeight: true
+    },
+    860: {
+      slidesPerView: slides,
+    }
+  }
+};
 
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
-      },
+if (useGrid) {
+  baseOptions.grid = {
+    rows: 1,
+    fill: 'row',
+  } as any;
+} 
 
-      keyboard: {
-        enabled: true,
-        onlyInViewport: true,
-        pageUpDown: true,
-      },
-
-      a11y: {
-        prevSlideMessage: 'Previous',
-        nextSlideMessage: 'Next',
-      },
-      loop: true,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    }}>
+---
+<div class={`${buttons ? 'swiper-wrapper-container' : ''} ${cls}`}>
+  <Swiper 
+    options={baseOptions}
+  >
     <SwiperWrapper>
-      <slot/>
+      <slot />
     </SwiperWrapper>
-
-    <SwiperPagination />
+    <SwiperPagination class={`swiper-pagination ${uid}-pagination`} />
   </Swiper>
-  {buttons &&   
-    <SwiperButtonPrev />
-    <SwiperButtonNext /> }
+
+  {buttons && <>
+    <SwiperButtonPrev class={`swiper-button-prev ${uid}-prev`} />
+    <SwiperButtonNext class={`swiper-button-next ${uid}-next`} />
+  </>}
 </div>
 
+<script>
+  const initNavigation = () => {
+    const swiperEl = document.querySelector('.swiper') as any;
+    const swiper = swiperEl?.swiper;
+
+    if (swiper && swiper.navigation) {
+      swiper.navigation.destroy();
+      swiper.navigation.init();
+      swiper.navigation.update();
+    }
+  };
+
+  if (document.readyState === 'complete') {
+    initNavigation();
+  } else {
+    window.addEventListener('load', initNavigation);
+  }
+</script>
+
+
+<style is:global>
+
+  .slides-grid .swiper-wrapper .swiper-slide  {
+    align-items: unset !important;
+  }
+
+  @media screen and (max-width: 860px) {
+     .slides-grid .swiper-wrapper {
+      display: flex;
+    }
+
+    .slides-grid .swiper-wrapper .swiper-slide {
+      align-items: center;
+    }
+  }
+</style>
 
 <style>
   .swiper-wrapper-container {
@@ -108,6 +185,14 @@ const {buttons=false, long=false} = Astro.props;
   @media screen and (max-width: 650px) {
     .swiper-wrapper-container {
       padding: 0;
+    }
+
+    .grid-slides {
+      grid-template-columns: 1fr;
+    }
+
+    .grid-slides .swiper-slide {
+      grid-column: auto !important;
     }
 
     .swiper-button-prev,
