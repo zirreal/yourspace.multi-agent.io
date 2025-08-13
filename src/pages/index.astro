@@ -101,13 +101,7 @@ import WORKDECOR from '../assets/img/work-decor.webp';
     <div class="layout">
       <div class="home-page-more__video">
         <Image src={VIDEO} alt="" aria-hidden="true" />
-          <iframe
-          src="https://rutube.ru/play/embed/0784c5b5e0da8d6bc9bc0f8cdcaf60f8/"
-          title="Умный дом, который объединяет все!"
-          frameborder="0"
-          allow="encrypted-media"
-          allowfullscreen
-        ></iframe>
+          <img class="home-page-more__video-gif" src="./interactive-map.gif" alt="Интерактивная карта умного дома"/ >
       </div>
 
       <div class="home-page__link">
@@ -467,12 +461,12 @@ import WORKDECOR from '../assets/img/work-decor.webp';
     display: block;
   }
 
-  .home-page-more__video iframe {
+  .home-page-more__video .home-page-more__video-gif  {
     position: absolute;
-    top: 0%; 
-    left: 12.5%; 
+    top: -4%;
+    left: 12.5%;
     width: 75%;
-    height: 90%;
+    height: 97%;
     object-fit: cover;
     border-radius: 4px;
   }
